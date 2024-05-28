@@ -55,7 +55,7 @@
         </ul>
     </div>
     <div class="copyright">
-        &copy; Copyright. All rights reserved. Design by <a href="https://github.com/Hu-Tu-Tu/StudentManagement">Hu-Tu-Tu</a>
+        &copy; Copyright. All rights reserved. Design by <a href="https://github.com/Hu-Tu-Tu/StudManager">Hu-Tu-Tu</a>
     </div>
 </footer>
 </body>
