@@ -40,6 +40,20 @@ public class AdminDao extends HttpServlet {
         action = request.getParameter("action");
         //判断所执行操作
         switch (action) {
+            //学生查询操作
+            case "stu_query_department":
+                stu_query_department(request, response);break;
+            case "stu_query_class":
+                stu_query_class(request, response);break;
+            case "stu_query_student":
+                stu_query_student(request, response);break;
+            case "stu_query_course":
+                stu_query_course(request, response);break;
+            case "stu_query_avg":
+                stu_query_avg(request, response);break;
+            case "stu_query_sc":
+                stu_query_sc(request, response);break;
+
             //用户操作
             case "query_all_user":
                 query_all_user(request, response);break;
@@ -110,6 +124,150 @@ public class AdminDao extends HttpServlet {
 
     }
 
+    /*-------------------------------- 学生信息查询 -----------------------------------*/
+    //查询所在院系
+    protected void stu_query_department(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String username = request.getParameter("username");
+
+        Department result = new DepartmentDao().user_query_department(username);
+        PrintWriter out = response.getWriter();
+        // 输出结果
+        if (result != null) {
+            out.write("<div class='all'>");
+            out.write("<div><span>系编号</span><span>系名</span></div>");
+
+            out.write("<div>");
+            out.write("<span>" + result.getDno() + "</span>");
+            out.write("<span>" + result.getDname() + "</span>");
+            out.write("</div>");
+
+            out.write("</div>");
+        }
+        out.flush();
+        out.close();
+    }
+    //查询所在班级
+    protected void stu_query_class(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String username = request.getParameter("username");
+        model.Class result=new ClassDao().user_query_class(username);
+        PrintWriter out = response.getWriter();
+        // 输出结果
+        if (result != null) {
+            out.write("<div class='all'>");
+            out.write("<div><span>班级编号</span><span>班级名</span><span>所属院系</span></div>");
+                out.write("<div>");
+                out.write("<span>" + result.getClno() + "</span>");
+                out.write("<span>" + result.getClname() + "</span>");
+                out.write("<span>" + result.getDno() + "</span>");
+                out.write("</div>");
+            out.write("</div>");
+        }
+        out.flush();
+        out.close();
+    }
+    // 查询所有学生
+    protected void stu_query_student(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String username = request.getParameter("username");
+        Student result = new StudentDao().user_query_student(username);
+        PrintWriter out = response.getWriter();
+        // 输出结果
+        if (result != null) {
+            out.write("<div class='all'>");
+            out.write("<div><span>学号</span><span>姓名</span><span>性别</span><span>年龄</span><span>所在班级编号</span></div>");
+                out.write("<div>");
+                out.write("<span>" + result.getSno() + "</span>");
+                out.write("<span>" + result.getSname() + "</span>");
+                out.write("<span>" + result.getSsex() + "</span>");
+                out.write("<span>" + result.getSage() + "</span>");
+                out.write("<span>" + result.getClno() + "</span>");
+                out.write("</div>");
+
+            out.write("</div>");
+        }
+        out.flush();
+        out.close();
+    }
+    //查询学生所修的课程
+    protected void stu_query_course(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String username = request.getParameter("username");
+        ArrayList<Course> results = new CourseDao().user_query_course(username);
+        PrintWriter out = response.getWriter();
+        if(results != null){
+            //输出结果
+            if(results != null){
+                out.write("<div class='all'>");
+                out.write("<div><span>课程号</span><span>课程名称</span><span>执教老师</span><span>学分</span></div>");
+                for(Course i:results) {
+                    out.write("<div>");
+                    out.write("<span>"+i.getCno()+"</span>");
+                    out.write("<span>"+i.getCname()+"</span>");
+                    out.write("<span>"+i.getCteacher()+"</span>");
+                    out.write("<span>"+i.getCcredit()+"</span>");
+                    out.write("</div>");
+                }
+                out.write("</div>");
+            }
+        }
+        out.flush();
+        out.close();
+    }
+    //查询所修课程平均分
+    protected void stu_query_avg(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String username = request.getParameter("username");
+        ArrayList<Course_avg> results = new CourseDao().user_course_avg(username);
+        PrintWriter out = response.getWriter();
+        if(results != null){
+            //输出结果
+            if(results != null){
+                out.write("<div class='all'>");
+                out.write("<div><span>课程号</span><span>课程名称</span><span>平均分</span></div>");
+                for(Course_avg i:results) {
+                    out.write("<div>");
+                    out.write("<span>"+i.getCno()+"</span>");
+                    out.write("<span>"+i.getCname()+"</span>");
+                    out.write("<span>"+i.getAvg()+"</span>");
+                    out.write("</div>");
+                }
+                out.write("</div>");
+            }
+        }
+        out.flush();
+        out.close();
+    }
+    // 查询所有成绩表
+    protected void stu_query_sc(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=utf-8");
+        String username = request.getParameter("username");
+        ArrayList<SC> results = new SCDao().user_query_sc(username);
+        PrintWriter out = response.getWriter();
+        // 输出结果
+        if (results != null) {
+            out.write("<div id='all_sc' class='all'>");
+            out.write("<div><span>学号</span><span>姓名</span><span>性别</span><span>年龄</span><span>课程号</span><span>课程名称</span><span>分数</span></div>");
+            for (SC i : results) {
+                out.write("<div>");
+                out.write("<span>" + i.getSno() + "</span>");
+                out.write("<span>" + i.getSname() + "</span>");
+                out.write("<span>" + i.getSsex() + "</span>");
+                out.write("<span>" + i.getSage() + "</span>");
+                out.write("<span>" + i.getCno() + "</span>");
+                out.write("<span>" + i.getCname() + "</span>");
+                out.write("<span>" + i.getGrade() + "</span>");
+                out.write("</div>");
+            }
+            out.write("</div>");
+        }
+        out.flush();
+        out.close();
+    }
     /*-------------------------------- 用户 -----------------------------------*/
     //查询所有用户
     protected void query_all_user(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -13,9 +13,34 @@ import utils.DBUtils;
 
 public class StudentDao {
 	// 获取所有学生的信息，用ArrayList返回
+	public Student user_query_student(String username) {
+		Connection conn = DBUtils.getConnection();
+		String sql = "select * from student where sno="+username+";";
+		Student result = new Student();
+		try {
+			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				result.setSno(rs.getString("sno"));
+				result.setSname(rs.getString("sname"));
+				result.setSsex(rs.getString("ssex"));
+				result.setSage(rs.getInt("sage"));
+				result.setClno(rs.getString("clno"));
+			}
+			// 关闭资源
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.closeConnection(conn);
+		}
+		return result;
+	}
+	// 获取所有学生的信息，用ArrayList返回
 	public ArrayList<Student> query_all_student() {
 		Connection conn = DBUtils.getConnection();
-		System.out.println("StudentDao"+conn);
+//		System.out.println("StudentDao"+conn);
 		String sql = "select * from student order by sno;";
 		ArrayList<Student> results = new ArrayList<Student>();
 		try {

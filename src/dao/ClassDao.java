@@ -13,6 +13,29 @@ import utils.DBUtils;
 import model.Class;
 
 public class ClassDao {
+	//查看所在的班级,如果为空则返回空
+	public Class user_query_class(String username){
+		Connection conn = DBUtils.getConnection();
+		String sql = "select c.clno,c.clname,c.dno from class c,student s where s.sno="+username+" and s.clno=c.clno;";
+		Class result = new Class();
+		try {
+			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				result.setClno(rs.getString("clno"));
+				result.setClname(rs.getString("clname"));
+				result.setDno(rs.getString("dno"));
+			}
+			// 关闭资源
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.closeConnection(conn);
+		}
+		return result;
+	}
 	// 获取所有班级的信息，用ArrayList返回
 	public ArrayList<Class> query_all_class() {
 		Connection conn = DBUtils.getConnection();

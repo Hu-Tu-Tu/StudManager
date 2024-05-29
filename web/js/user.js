@@ -126,3 +126,26 @@ function query_all(object) {
     xmlhttp.open("GET", "/StudManager_war_exploded/AdminDao?action=query_all_" + object, true);
     xmlhttp.send();
 }
+
+/*-------------------------学生查询-------------------------*/
+
+function stu_query(userName,object) {
+    var xmlhttp;
+    if (window.XMLHttpRequest) {
+        //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xmlhttp = new XMLHttpRequest();
+    }
+    else {
+        // IE6, IE5 浏览器执行代码
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+            document.getElementById("result").innerHTML = xmlhttp.responseText;
+        }
+    }
+    //修改之后再win的谷歌浏览器要强制刷新，其刷新快捷键为chrt+shift+r
+    xmlhttp.open("GET", "/StudManager_war_exploded/AdminDao?username="+userName+"&action=stu_query_" + object, true);
+    xmlhttp.send();
+}

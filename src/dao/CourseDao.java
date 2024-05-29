@@ -16,6 +16,60 @@ import model.Course_ranking;
 import utils.DBUtils;
 
 public class CourseDao {
+	// 获取学生修的课程
+	public ArrayList<Course> user_query_course(String username) {
+		Connection conn = DBUtils.getConnection();
+		String sql = "select c.cno,c.cname,c.cteacher,c.ccredit from course c,sc,student s where c.cno=sc.cno and sc.sno=s.sno and s.sno="+username+" order by c.cno;";
+		ArrayList<Course> results = new ArrayList<Course>();
+		try {
+			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Course temp = new Course();
+				temp.setCno(rs.getString("Cno"));
+				temp.setCname(rs.getString("Cname"));
+				temp.setCteacher(rs.getString("Cteacher"));
+				temp.setCcredit(rs.getInt("Ccredit"));
+				results.add(temp);
+			}
+			// 关闭资源
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.closeConnection(conn);
+		}
+		return results;
+	}
+	// 查询课程平均分信息，返回一个ArrayLst集合
+	public ArrayList<Course_avg> user_course_avg(String username) {
+		Connection conn = DBUtils.getConnection();
+		String sql = "select sc_all.cno cno,cname,avg(grade) avg from course," +
+				"(select a.cno cno,sno,grade from (select cno from sc where sc.sno="+username+
+				") a,sc where a.cno=sc.cno) sc_all where course.cno = sc_all.cno group by cno;";
+		ResultSet result = null;
+		ArrayList<Course_avg> course_avg = new ArrayList<Course_avg>();
+		try {
+			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+			result = ps.executeQuery();
+			while(result.next()){
+				Course_avg temp = new Course_avg();
+				temp.setCno(result.getString("Cno"));
+				temp.setCname(result.getString("Cname"));
+				temp.setAvg(result.getDouble("avg"));
+				course_avg.add(temp);
+			}
+			ps.close();
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.closeConnection(conn);
+		}
+		return course_avg;
+	}
+
 	// 获取所有课程的信息，用ArrayList返回
 	public ArrayList<Course> query_all_course() {
 		Connection conn = DBUtils.getConnection();

@@ -13,6 +13,28 @@ import model.Department;
 import utils.DBUtils;
 
 public class DepartmentDao {
+	//查询单个院系信息，当为空值的说明表中无数据元组
+	public Department user_query_department(String userName) {
+		Connection conn = DBUtils.getConnection();
+		String sql = "select d.dno,dname from class c,student s,department d where s.sno="+userName+" and s.clno=c.clno and d.dno=c.dno;";
+		Department result = new Department();
+
+		try {
+			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()){
+				result.setDno(rs.getString("Dno"));
+				result.setDname(rs.getString("Dname"));
+			}
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.closeConnection(conn);
+		}
+		return result;
+	}
 	//查询所有的系信息，查询返回一个含值的ArrayList,当为空值的说明表中无数据元组
 	public ArrayList<Department> query_all_department() {
 		Connection conn = DBUtils.getConnection();

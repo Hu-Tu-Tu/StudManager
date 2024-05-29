@@ -12,7 +12,35 @@ import model.SC;
 import utils.DBUtils;
 
 public class SCDao {
-
+	//查询选修的课程的成绩,用ArrayList返回
+	public ArrayList<SC> user_query_sc(String username) {
+		Connection conn = DBUtils.getConnection();
+		String sql = "select s.sno,sname,ssex,sage,c.cno,cname,grade from sc,student s,course c where sc.sno = s.sno and c.cno = sc.cno and s.sno="+username+";";
+		ArrayList<SC> results = new ArrayList<SC>();
+		try {
+			PreparedStatement ps = (PreparedStatement) conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				SC temp = new SC();
+				temp.setSno(rs.getString("sno"));
+				temp.setSname(rs.getString("sname"));
+				temp.setSsex(rs.getString("ssex"));
+				temp.setSage(rs.getInt("sage"));
+				temp.setCno(rs.getString("cno"));
+				temp.setCname(rs.getString("cname"));
+				temp.setGrade(rs.getDouble("grade"));
+				results.add(temp);
+			}
+			// 关闭资源
+			rs.close();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtils.closeConnection(conn);
+		}
+		return results;
+	}
 	// 获取所有成绩记录的信息，用ArrayList返回
 	public ArrayList<SC> query_all_sc() {
 		Connection conn = DBUtils.getConnection();
