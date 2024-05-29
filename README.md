@@ -10,15 +10,15 @@
 
 **学生登录系统实现功能：**
 
-查看全部院系，用页面返回结果
+查看所在院系，用页面返回结果
 
-查看全部班级，用页面返回结果
+查看所在班级，用页面返回结果
 
-查看全部学生信息，用页面返回结果
+查看学生信息，用页面返回结果
 
-查看全部课程信息，课程平均分，课程不及格率，用页面返回结果
+查看所修课程信息，课程平均分，课程不及格率，用页面返回结果
 
-查看全部成绩，用页面返回结果
+查看所修课程成绩，用页面返回结果
 
 **管理员登录系统实现功能**
 
@@ -147,7 +147,19 @@ SC(**==Sno,Cno==**,Grade)
 | Cno   | Char(12)             | 非空    |          |
 | Grade | Smallint(6)          | 空      | 0~100    |
 
-## 三、算法
+> ps：sql的代码在项目代码中有
+
+## 三、技术栈
+
+- JSP + Servlet
+
+- HTML5 + CSS3 + JavaScript + Bootstrap + Jquery
+
+- ajax：ajax可以通过与场景的web服务器交换数据来异步更新网页，也就是可以只更新网页的部分而不需要重新加载整个页面，其工作原理如下：
+
+  ![AJAX](README.assets/ajax.gif)
+
+## 四、算法
 
 > 算法描述
 
@@ -177,29 +189,21 @@ Admin.jsp：管理员操作界面
 
 User.jsp：用户操作界面
 
-## 四、技术栈
-
-- JSP + Servlet
-- HTML5 + CSS3 + JavaScript + Bootstrap + Jquery
-
-
-
-> 分层编辑思想
-
-控制层、业务逻辑层、数据访问层
-
-
-
-> 定义包结构
-
-service：业务逻辑层，调用数据访问层来访问数据；
-
-dao：数据访问层，编辑与增删改查相关的操作。
-
-util：工具类。
-
-
-
 ## 五、系统处理流程
 
 ![系统处理流程](README.assets/%E7%B3%BB%E7%BB%9F%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.jpg)
+
+
+
+## 六、项目环境
+
+- idea 2021
+- mysql 8.0.29、mysql-connector-java-8.0.29
+- tomcat 8.0.41
+- chrome等浏览器
+
+- jdk 1.8
+
+## 七、快速启动
+
+查看类似一下的文章，可以快速启动项目：[点这里](https://blog.csdn.net/CodePlayMe/article/details/139203176?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22139203176%22%2C%22source%22%3A%22CodePlayMe%22%7D)
