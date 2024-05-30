@@ -48,15 +48,15 @@
 
 **权限管理**：
 
-![image-20240524171435670](README.assets/image-20240524171435670.png)
+![](images/权限管理.png)
 
 **全部功能**
 
-![image-20240524171317232](README.assets/image-20240524171317232.png)
+![](images/学生信息管理系统.png)
 
 ## 二、数据库设计
 
-![image-20240524184227660](README.assets/image-20240524184227660.png)
+![](images/ER.png)
 
 **实体集：**院系、班级、用户、课程、学生。
 
@@ -157,7 +157,7 @@ SC(**==Sno,Cno==**,Grade)
 
 - ajax：ajax可以通过与场景的web服务器交换数据来异步更新网页，也就是可以只更新网页的部分而不需要重新加载整个页面，其工作原理如下：
 
-  ![AJAX](README.assets/ajax.gif)
+  ![AJAX](images/ajax.gif)
 
 ## 四、算法
 
@@ -191,7 +191,7 @@ User.jsp：用户操作界面
 
 ## 五、系统处理流程
 
-![系统处理流程](README.assets/%E7%B3%BB%E7%BB%9F%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B.jpg)
+![系统处理流程](images/系统处理流程.jpg)
 
 
 

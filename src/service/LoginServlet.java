@@ -10,6 +10,10 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
 public class LoginServlet extends HttpServlet {
+    /**
+     * GET请求通常用来获取或查询资源，而POST请求则用于创建或修改资源。
+     * 简单来说，GET相当于是一个“拉”的操作，从服务器拉取数据；而POST相当于是一个“推”的操作，向服务器推送数据
+     */
     private static final long serialVersionUID = 1L;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
